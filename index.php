@@ -8,8 +8,8 @@ $router = require_once __DIR__ . '/routes.php';
 
 $request = Request::createFromGlobal();
 
-try{
+try {
     echo $router->handle($request);
-}catch (RouteNotFoundException $exception){
+} catch (RouteNotFoundException $exception) {
     echo $exception->getMessage();
 }

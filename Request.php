@@ -2,13 +2,19 @@
 
 final class Request
 {
-    public function __construct(
-        private readonly string $uri,
-        private readonly string $method,
-        private readonly array  $queryParams
-    )
-    {
+    private string $uri;
+    private string $method;
+    private array  $queryParams;
 
+
+    public function __construct(
+        string $uri,
+        string $method,
+        array  $queryParams
+    ) {
+        $this->$uri = $uri;
+        $this->$method = $method;
+        $this->$queryParams = $queryParams;
     }
 
     public static function createFromGlobal(): self
@@ -47,7 +53,7 @@ final class Request
         return $this->method;
     }
 
-    public function get(string $name, mixed $default = null): mixed
+    public function get(string $name, mixed $default = null) //: mixed
     {
         if (isset($this->queryParams[$name])) {
             return $this->queryParams[$name];
@@ -57,5 +63,4 @@ final class Request
         }
         return $default;
     }
-
 }

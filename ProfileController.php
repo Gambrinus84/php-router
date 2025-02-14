@@ -2,7 +2,8 @@
 
 class ProfileController
 {
-    public function __invoke(int $id, Request $request){
-        return 'Profile ID:'.$id;
+    public function __invoke(int $id, Request $request)
+    {
+        return 'Profile ID:' . $id;
     }
 }

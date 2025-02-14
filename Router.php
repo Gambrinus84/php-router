@@ -5,24 +5,24 @@ final class Router
 {
     private array $routes = [];
     private const SEPARATOR = '::';
-    public function register(string $url, callable $action,string $methods = 'GET|POST'): array
+    public function register(string $url, callable $action, string $methods = 'GET|POST'): array
     {
         $url = preg_replace('~{(.*)}~mU', '(?<$1>\S+)', $url);
-        $url = sprintf('~^(%s)/?%s(%s)$~i',$url, self::SEPARATOR, $methods);
-        $this->routes[$url]= $action;
+        $url = sprintf('~^(%s)/?%s(%s)$~i', $url, self::SEPARATOR, $methods);
+        $this->routes[$url] = $action;
 
         return $this->routes;
     }
-    public function handle(Request $request): mixed
+    public function handle(Request $request) //: mixed
     {
-        $searchString = $request->getUri() . self::SEPARATOR .$request->getMethod();
+        $searchString = $request->getUri() . self::SEPARATOR . $request->getMethod();
 
-        foreach($this->routes as $rexEx => $action){
+        foreach ($this->routes as $rexEx => $action) {
             $matches = [];
-            if(!preg_match($rexEx,$searchString,$matches)){
+            if (!preg_match($rexEx, $searchString, $matches)) {
                 continue;
             }
-            $matches = array_filter($matches,function ($key){
+            $matches = array_filter($matches, function ($key) {
                 return is_int($key) === false;
             }, ARRAY_FILTER_USE_KEY);
 
@@ -30,7 +30,7 @@ final class Router
 
             return $action(...$matches);
         }
-        $message = sprintf('Route %s not found',$request->getUri());
+        $message = sprintf('Route %s not found', $request->getUri());
         http_response_code(404);
         throw new RouteNotFoundException($message);
     }

@@ -1,6 +1,3 @@
 <?php
 
-final class RouteNotFoundException extends Exception
-{
-
-}
+final class RouteNotFoundException extends Exception {}
